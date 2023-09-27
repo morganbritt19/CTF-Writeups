@@ -159,16 +159,16 @@ nikto -h http://[ip]:8081
 - This appears to be a website hosted on the non-standard port 31331, running on an Apache webserver using Node.js.
 
 #### Gobuster
-- [[Gobuster]] has provided information regarding possible directories, including `/js` and `/javascript`.
+- Gobuster has provided information regarding possible directories, including `/js` and `/javascript`.
 	- Visiting `/javascript` returns a 403 forbidden page. 
 	- However, navigating to the `/js` directory displays the following:
 
 ![[js Directory.png]]
 
-- [[Gobuster]] also found an `/auth` directory on port 8081, but when visited, it shows a basic static page stating a username and password is required.
+- Gobuster also found an `/auth` directory on port 8081, but when visited, it shows a basic static page stating a username and password is required.
 
 #### Nikto
-- [[Nikto]] referenced a `/robots.txt` file that was available. When visited, the following was displayed:
+- Nikto referenced a `/robots.txt` file that was available. When visited, the following was displayed:
 ```js
 Allow: *
 User-Agent: *
@@ -210,7 +210,7 @@ Sitemap: /utech_sitemap.txt
 ## System Hacking
 ### Cracking Hashes
 - r00t user hash: f357a0c52799563c7c7b76c1e7543a32
-	- This is an MD5 hash. Tools like [[John The Ripper]], [[Hashcat]], or [[Crackstation]] can be used. 
+	- This is an MD5 hash. Tools like John The Ripper, Hashcat, or Crackstation can be used. 
 	- Cracked hash: **n100906**
 - admin user hash: f357a0c52799563c7c7b76c1e7543a32
 	- Cracked hash: **mrsheafy**
@@ -223,15 +223,15 @@ Password: n100906
 ```
 
 - Once authenticated, we can begin some internal enumeration. I typically begin by running `sudo -l` to see if the `r00t` user has any sudo permissions that can be exploited. Following that, I bounced around a few directories looking for anything of note. Did some other basic enumeration like looking at the `/etc/passwd` file to see if there were other users to enumerate.
-- I tried to SSH into the machine as the `admin` user, but it didn't work. It wouldn't authenticate to the FTP server either, so I check to see if it would work with the `/partners.html` login page. It did, but I was greeted with a page that contained a note talking about server misconfigurations. Since we already knew that there were likely [[Privilege Escalation]] vectors, this didn't help much.
+- I tried to SSH into the machine as the `admin` user, but it didn't work. It wouldn't authenticate to the FTP server either, so I check to see if it would work with the `/partners.html` login page. It did, but I was greeted with a page that contained a note talking about server misconfigurations. Since we already knew that there were likely Privilege Escalation vectors, this didn't help much.
 
 - Running the `id` command as the `r00t` user gave us the following output:
 ```bash
 uid=1001(r00t) gid=1001(r00t) groups=1001(r00t),116(docker)
 ```
 
-- It looks like the `r00t` user is a member of the `docker` group on the machine. It might be worth checking out [[External Resources (RT)|GTFOBins]] and see if there are any ways to abuse that to spawn a root shell.
-- The following syntax from [[External Resources (RT)|GTFOBins]] provides us with a root shell as a member of the `docker` group:
+- It looks like the `r00t` user is a member of the `docker` group on the machine. It might be worth checking out GTFOBins and see if there are any ways to abuse that to spawn a root shell.
+- The following syntax from GTFOBins provides us with a root shell as a member of the `docker` group:
 ```
 docker run -v /:/mnt --rm -it alpine chroot /mnt sh
 ```
@@ -261,10 +261,10 @@ docker run -v /:/mnt --rm -it bash chroot /mnt sh
 
 ## Rabbit Holes
 ### Brute Forcing SSH Credentials with Hydra
-- I had a hunch that the team specified on the landing page put what was likely to be their username to login to the partner portal. With that, I tried to use [[Hydra]] to use each of those usernames with a common credentials wordlist to brute force SSH and FTP. I attempted the usernames of `r00t` and `John`, since those are the username and name of the developer specified on the webpage respectively. 
+- I had a hunch that the team specified on the landing page put what was likely to be their username to login to the partner portal. With that, I tried to use Hydra to use each of those usernames with a common credentials wordlist to brute force SSH and FTP. I attempted the usernames of `r00t` and `John`, since those are the username and name of the developer specified on the webpage respectively. 
 
 ### Sniper with Burp Suite
-- I tried to use [[Sniper]] through [[Burp Suite]] once I found the `/partners.html` page by specifying `ultratech` as the username and selecting a long wordlist for passwords, but [[Burp Suite]] is so rate limited that it wasn't worth waiting for. I decided to do a little more looking instead, and found the two API routes. 
+- I tried to use Sniper through Burp Suite once I found the `/partners.html` page by specifying `ultratech` as the username and selecting a long wordlist for passwords, but Burp Suite is so rate limited that it wasn't worth waiting for. I decided to do a little more looking instead, and found the two API routes. 
 
 ### Potential Username in Source Code
 - After viewing the page source, we can see that there is a potential username to be used for authentication:
