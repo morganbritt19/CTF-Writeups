@@ -1,9 +1,10 @@
-### Scanning
-#### Nmap
+# Brookly Nine-Nine THM Room
+## Scanning
+### Nmap
 ```bash
 nmap -sC -sV -oN nmapIntial [ip]
 ```
-##### Output
+#### Output
 ```python
 # Nmap 7.60 scan initiated Tue Sep 12 20:37:44 2023 as: nmap -sC -sV -oN nmapInitial target-ip
 Nmap scan report for ip-10-10-104-245.eu-west-1.compute.internal (target-ip)
@@ -46,11 +47,11 @@ Service detection performed. Please report any incorrect results at https://nmap
 - Port 80 is open
 - SSH is open, and that will likely be how we gain access to the machine. 
 
-#### Gobuster
+### Gobuster
 ```bash
 gobuster dir -u http://[ip] -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
 ```
-##### Output
+#### Output
 ```python
 ===============================================================
 Gobuster v3.0.1
@@ -74,8 +75,8 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
 - The `/server-status` directory returns a 403: Forbidden status code. 
 - Not much else worthy of note here.
 
-### Enumeration
-#### FTP Enumeration
+## Enumeration
+### FTP Enumeration
 - To take advantage of the Anonymous FTP authentication, use the following syntax:
 ```
 ftp [ip]
@@ -106,8 +107,8 @@ Jake please change your password. It is too weak and holt will be mad if someone
 - This note asserts that there is a Jake user and the password for that user is weak. This could lead to a brute force attempt at SSH authentication using something like Hydra. See ***System Hacking*** below. 
 The FTP Enumeration note may provide more guidance. 
 
-#### HTTP Enumeration
-##### Site source code:
+### HTTP Enumeration
+#### Site source code:
 ```
 <!DOCTYPE html>
 <html>
@@ -149,8 +150,8 @@ body, html {
 
 ***Note: This is a screenshot and not the actual image from the challenge.***
 
-### System Hacking
-#### Gaining System Access
+## System Hacking
+### Gaining System Access
 With the note provided by the FTP server, we have concluded that there is a Jake user with a weak password. At this point, we can employ [[Hydra]] to brute force that password by trying to authenticate via SSH. The syntax is as follows:
 ```
 hydra -l jake -P /usr/share/wordlists/SecLists/Passwords/Common-Credentials/10k-most-common.txt -t 6 ssh://[ip]
@@ -198,7 +199,7 @@ We can further enumerate this machine by searching through directories. It is wo
 flag: ee11cbb19052e40b07aac0ca060c23ee
 ```
 
-### Privilege Escalation
+## Privilege Escalation
 Typical Privilege Escalation begins with moving over enumeration scripts like LinPEASS and LinEnum for automation. While those run, it is a good idea to check `sudo` privileges with `sudo -l`. If some are found, checking them on GTFOBins is worthwhile.
 
 - To start, I ran `sudo -l` to check privileges for the jake user. This was the output:
@@ -227,12 +228,12 @@ Here is the flag: 63a9f0ea7bb98050796b649e85481845
 Enjoy!!
 ```
 
-### Rabbit Holes
-#### Searching for Steganography
+## Rabbit Holes
+### Searching for Steganography
 - I navigated to the /brooklyn99.jpg directory seen in the page source code. I downloaded it since there was reference to steganography in the comments.
 - I used Exiftool, CyberChef, and Binwalk to pull metadata from it, but to no avail. 
 
-#### Holt User
+### Holt User
 - After obtaining root permissions, you can switch to the Holt user. Using `sudo -l` will show the following:
 ```
 holt@brookly_nine_nine:~$ sudo -l
