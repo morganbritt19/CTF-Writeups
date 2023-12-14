@@ -102,17 +102,20 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
 ## Enumeration
 - Let's begin tackling this challenge by first visiting the web server hosted by the target machine as indicated by our [[Nmap]] scan. I always have a methodology that I like to follow when doing these challenges, and the first I thing I do when I see port 80 open on a box is to run [Gobuster](https://github.com/OJ/gobuster) to enumerate directories. While that runs, I go and look at the web page through my browser to see what I can see. I'll usually look at the page source and search for HTML comments and the like. In this case, when we get to the web page, we can see the following default Apache web page:
 
-![[Default Apache Page.png]]
+![Default Apache Page](https://github.com/morganbritt19/CTF-Writeups/assets/60797871/8c67a1ac-cb40-44af-a251-b98317e9df86)
+
 
 - There doesn't seem to be anything here, but our [Gobuster](https://github.com/OJ/gobuster) scan shows that there is a directory called `/simple` that we can reach. When we go there, we see the following:
 
-![[Simple CMS.png]]
+![Simple CMS](https://github.com/morganbritt19/CTF-Writeups/assets/60797871/3e213436-8c94-47b4-bdab-4a54da0e9a4b)
+
 
 - It looks like the target is hosting a content management system, or CMS. In this case, it's the Simple CMS. If you are unaware, and CMS is software that helps users create, manage, or modify the contents of a web page without being tech savvy. Let's look around and see if there is anything that can give us more information. 
 - Since we found the `/simple` directory and have discovered that it's a CMS, we should rerun our [Gobuster](https://github.com/OJ/gobuster) command with `/simple` appended on the end of the `http://target-ip` string. Typically, CMS systems like Simple or WordPress have a login page that we may be able to look at and further exploit. While that runs, let's do some manual enumeration. 
 - At the bottom of the page, we can see a version number of the system that is running:
 
-![[CMS Version.png]]
+![CMS Version](https://github.com/morganbritt19/CTF-Writeups/assets/60797871/416050ff-03ac-472c-b5c1-0ff37b4dffb6)
+
 
 - That, paired with the guided questions offered by THM, leads us to think that there may be some publicly available exploit for this software version that can help us compromise the machine. Let's go do some research and see what we can find. 
 
