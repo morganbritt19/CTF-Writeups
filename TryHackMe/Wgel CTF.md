@@ -1,4 +1,3 @@
-# Wgel CTF THM Room
 ## Scanning
 ### Nmap
 ```
@@ -112,8 +111,7 @@ chmod 600 id_rsa
 ssh jess@[ip] -i id_rsa
 ```
 
-- From here, we can navigate to the `~/Documents` directory and cat out the user flag:
-	- user_flag.txt - 057c67131c3d5e42dd5cd3075b198ff6
+- From here, we can navigate to the `~/Documents` directory and cat out the user flag. 
 
 ## Privilege Escalation
 - One of the first things I do when I get user access to a machine is to check what permissions the user I have compromised can run with root privileges. In this case, I get the following output when I use `sudo -l`:
@@ -150,9 +148,11 @@ Connection: Keep-Alive
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 33
 
-b1b968b37519ad1daa6408188649263d
+{flag}
 ```
 
 ## Rabbit Holes
 ### Username Enumeration Exploit
-- At one point, I was struggling to find more directories under the `/sitemap` one. I had gone through all of the .js file and .scss files and couldn't find anything of value. So I decided to look up exploits related to the version of SSH that was running, and that led me to [this page](https://www.exploit-db.com/exploits/40136) that basically outline username enumeration via a Python script. This worked, but it didn't yield useful results since I already had the correct username that I needed to log into the target machine. 
+- At one point, I was struggling to find more directories under the `/sitemap` one. I had gone through all of the .js file and .scss files and couldn't find anything of value. So I decided to look up exploits related to the version of SSH that was running, and that led me to [this page](https://www.exploit-db.com/exploits/40136) that basically outline username enumeration via a Python script. This worked, but it didn't yield useful results since I already had the correct username that I needed to log into the target machine.
+
+[Wgel CTF THM Room](https://tryhackme.com/room/wgelctf)
