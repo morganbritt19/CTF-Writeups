@@ -1,4 +1,3 @@
-# Agent Sudo THM Room
 ## Scanning
 ### Nmap
 ```
@@ -275,7 +274,6 @@ chris
 
 - It looks like Agent J's real name is James and his login password is `hackerrules!`. Let's try and see what James can access. Since SSH is open, lets try to get access with these credentials. 
 - In his home directory, we can grab the flag from the `user_flag.txt` file.
-	- `user_flag.txt` - `b03d975e8c92a7c04146cfa7a5a313c7`
 
 ## Privilege Escalation
 - Now that we are on the box, let's look around and see what we can do to get root permissions. Typically, I start out by using `sudo -l` to see what kind of permissions our user has, and if they can run anything as root. When we do that for the `james` user, we get the following information:
@@ -304,14 +302,11 @@ To Mr.hacker,
 Congratulation on rooting this box. This box was designed for TryHackMe. Tips, always update your machine. 
 
 Your flag is 
-b53a02f55b57d4439e3341834d70c062
+{flag}
 
 By,
 DesKel a.k.a Agent R
 ```
-
-- We have gotten the root flag:
-	- `root.txt` - `b53a02f55b57d4439e3341834d70c062`
 
 ### Extra
 - There is a part of this challenge that isn't directly related to get access and escalating privileges, and that is regarding the `Alien_autopsy.jpg` file in the `/home/james` directory on the target. We can use SCP to get it over with the following:
@@ -321,37 +316,4 @@ scp james@target-ip:Alien_autopsy.jpg ~/
 
 - Once we have this file, we can do some googling and reverse image searching to find an article from Fox News that dubs the incident the Roswell alien autopsy, which is the answer to the question.
 
-## THM Questions
-### Enumerate
-1. How many open ports?
-	1. 3
-2. How you redirect yourself to a secret page?
-	1. User-agent
-3. What is the agent name?
-	1. Chris
-
-### Hash Cracking and Brute-Force
-1. FTP password
-	1. `crystal`
-2. Zip file password
-	1. `alien`
-3. Steg password 
-	1. `Area51`
-4. Who is the other agent (in full name)?
-	1. `James`
-5. SSH password
-	1. `hackerrules!`
-
-### Capture the User Flag
-1. User flag
-	1. `b03d975e8c92a7c04146cfa7a5a313c7`
-2. What is the incident of the photo called?
-	1. `roswell alien autopsy` 
-
-### Privilege Escalation
-1. CVE number for escalation
-	1. CVE-2019-14287
-2. Root flag
-	1. `b53a02f55b57d4439e3341834d70c062`
-3. (Bonus) Who is Agent R?
-	1. `DesKel` (box author)
+[Agent Sudo THM Room](https://tryhackme.com/room/agentsudoctf)
